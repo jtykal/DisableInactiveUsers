@@ -1,5 +1,7 @@
 require 'optparse'
 require 'ostruct'
+require 'logger'
+require 'rally_api'
 #!/usr/bin/env ruby
 # ------------------------------------------------------------------------------
 # SCRIPT:
@@ -50,7 +52,6 @@ end
 # Set up logger.
 #
 def setup_logger()
-  require 'logger'
   time_now = Time.new.strftime("%Y_%m_%d_%H_%M_%S")
   #logfile = $my_util_name+time_now+'.log'
   if(@display_only)
