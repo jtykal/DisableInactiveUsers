@@ -2,7 +2,6 @@ require 'optparse'
 require 'ostruct'
 require 'logger'
 require 'rally_api'
-
 #!/usr/bin/env ruby
 # ------------------------------------------------------------------------------
 # SCRIPT:
@@ -96,20 +95,6 @@ def error_exit(exit_code,action,msg='') #{
   end
   exit (exit_code)
 end #} end of "def error_exit(exit_code,action)"
-
-
-# ------------------------------------------------------------------------------
-# Load (and maybe override with) my personal/private variables from a file.
-#
-def get_my_vars()
-  my_vars = '../MyVars.rb'
-  if FileTest.exist?( my_vars )
-    @logger.info("Loading '#{my_vars}'")
-    require my_vars
-  else
-    @logger.info("File '#{my_vars}' not found; skipping load")
-  end
-end
 
 
 # ------------------------------------------------------------------------------
@@ -452,7 +437,6 @@ end
 
     get_args()
     setup_logger()
-    get_my_vars()
     require_gems()
     connect_to_rally()
     get_all_users()
