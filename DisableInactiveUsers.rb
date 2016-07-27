@@ -2,6 +2,7 @@ require 'optparse'
 require 'ostruct'
 require 'logger'
 require 'rally_api'
+
 #!/usr/bin/env ruby
 # ------------------------------------------------------------------------------
 # SCRIPT:
@@ -23,9 +24,9 @@ require 'rally_api'
 # Define our constants / variables.
 #
 $my_util_name   = 'DisableInactiveUsers_'
-$my_base_url    = 'https://rally1.rallydev.com'
-$my_username    = 'user@domain.com' # Enter the username
-$my_password    = '' # If empty, user will be prompted for it.
+$my_base_url    = '' # Promt for the Agile Central URL, i.e., "https://rally1.rallydev.com"
+$my_username    = '' # Prompt for the Agile Central username, i.e., "user@domain.com"
+$my_password    = '' # Prompt for the user's Agile Central passsword.
 $my_version     = 'v2.0'
 $my_failsafe    = false # quit after four users?
 
@@ -179,13 +180,26 @@ end
 # Routine to connect to Rally.
 #
 def connect_to_rally()
-  # Be sure Rally URL is good (removing trailing '/' if present and add '/slm' if needed)
-   $my_base_url = $my_base_url.chomp('/')
-   $my_base_url << '/slm' if !$my_base_url.end_with?('/slm')
-
+  # If there is no Agile Central URL set, read from user.
+  if $my_base_url.nil? || $my_base_url.empty?
+    @logger.info("Please enter the Agile Central URL (i.e., 'https://rally1.rallydev.com')")
+    print 'Agile Central URL: '
+    $my_base_url = STDIN.gets.chomp.strip
+    # Be sure Rally URL is good (removing trailing '/' if present and add '/slm' if needed)
+    $my_base_url = $my_base_url.chomp('/')
+    $my_base_url << '/slm' if !$my_base_url.end_with?('/slm')
+  end
+  
+  # If there is no Agile Central username set, read from user.
+  if $my_username.nil? || $my_username.empty?
+    @logger.info("Please enter the Agile Central username (i.e., 'user@domain.com')")
+    print 'username: '
+    $my_username = STDIN.gets.chomp.strip
+  end
+  
   # If there is no password yet, read from user (with no-echo).
   if $my_password.nil? || $my_password.empty?
-    @logger.info("Password for '#{$my_username}' at '#{$my_base_url}' not found, please enter now")
+    @logger.info("Please enter the Agile Central password for '#{$my_username}' at '#{$my_base_url}'")
     print 'password: '
     $my_password = STDIN.noecho(&:gets).chomp.strip
   end
