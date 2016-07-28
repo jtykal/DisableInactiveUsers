@@ -172,7 +172,7 @@ def connect_to_rally()
     $my_base_url = STDIN.gets.chomp.strip
     # Be sure Rally URL is good (removing trailing '/' if present and add '/slm' if needed)
     $my_base_url = $my_base_url.chomp('/')
-    $my_base_url << '/slm' if !$my_base_url.end_with?('/slm')
+    $my_base_url << '/slm' if $my_base_url.end_with?('rallydev.com')
   end
   
   # If there is no Agile Central username set, read from user.
