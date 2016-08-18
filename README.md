@@ -7,4 +7,4 @@ In order to make the Ruby script work as an executable with ocra, a couple of ch
 <LI>Explicity "require" the rally_api and logger gems at the top of the file (so they are recognized and loaded by ocra)</LI>
 <LI>Prompt for the URL, user login, and password for Agile Central rather than having these values hard-coded or read from a file</LI>
 </UL>
-jt - updated 18-Aug-2016 (try connector with IP address)
+jt - updated 18-Aug-2016 (back to URL)
